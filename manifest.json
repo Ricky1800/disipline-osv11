@@ -1,0 +1,8 @@
+{
+  "name": "Discipline OS",
+  "short_name": "DOS",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0b1220",
+  "theme_color": "#0b1220"
+}

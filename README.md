@@ -1,1 +1,2 @@
-# disipline-osv11
+# Discipline OS
+Offline-first discipline tracker
