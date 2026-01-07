@@ -1,0 +1,189 @@
+:root{
+  --bg:#0b1220;
+  --card:rgba(18,26,45,.88);
+  --border:rgba(148,163,184,.22);
+  --text:#e5e7eb;
+  --muted:rgba(229,231,235,.55);
+
+  --green:#22c55e;
+  --amber:#f59e0b;
+  --red:#ef4444;
+  --blue:#3b82f6;
+
+  --radius:16px;
+  --shadow:0 20px 50px rgba(0,0,0,.45);
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif;
+  background:
+    radial-gradient(900px 600px at 20% -10%, #1b2a4a 0%, transparent 50%),
+    linear-gradient(180deg,#060913,#0b1220);
+  color:var(--text);
+}
+
+#app{
+  max-width:520px;
+  margin:0 auto;
+  padding:18px 14px 36px;
+}
+
+/* Top */
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:16px;
+}
+.brand .title{
+  font-size:22px;
+  font-weight:900;
+}
+.brand .sub{
+  font-size:12px;
+  color:var(--muted);
+}
+.status{
+  padding:8px 12px;
+  border-radius:999px;
+  background:var(--card);
+  border:1px solid var(--border);
+  font-weight:700;
+}
+
+/* Tabs */
+.tabs{
+  display:flex;
+  gap:10px;
+  margin-bottom:16px;
+}
+.tab{
+  flex:1;
+  min-height:46px;
+  border-radius:12px;
+  background:var(--card);
+  border:1px solid var(--border);
+  color:var(--text);
+  font-weight:700;
+}
+.tab.active{
+  outline:2px solid rgba(59,130,246,.35);
+}
+
+/* Card */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px;
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+}
+
+/* Big day */
+.day-name{
+  font-size:36px;
+  font-weight:900;
+}
+.day-date{
+  font-size:14px;
+  color:var(--muted);
+  margin-bottom:12px;
+}
+
+/* Habits */
+.habit{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  margin-bottom:12px;
+}
+.habit .meta{
+  font-size:11px;
+  color:var(--muted);
+}
+
+/* Toggle */
+.toggle{
+  width:50px;height:28px;
+  border-radius:999px;
+  background:#0a1020;
+  border:1px solid var(--border);
+  position:relative;
+}
+.toggle::after{
+  content:"";
+  position:absolute;
+  top:50%;left:3px;
+  width:22px;height:22px;
+  background:#e5e7eb;
+  border-radius:50%;
+  transform:translateY(-50%);
+  transition:.2s;
+}
+.toggle.on{background:rgba(34,197,94,.25)}
+.toggle.on::after{left:25px;background:var(--green)}
+.toggle.locked{opacity:.45}
+
+/* Buttons */
+.btn{
+  min-height:46px;
+  border-radius:12px;
+  border:none;
+  font-weight:700;
+  margin-top:10px;
+}
+.btn.primary{background:var(--green);color:#052e16}
+.btn.secondary{background:var(--blue);color:white}
+.btn.warn{background:var(--amber);color:#3b2f0b}
+.btn.danger{background:var(--red);color:white}
+
+/* Notes */
+textarea{
+  width:100%;
+  min-height:70px;
+  margin-top:12px;
+  background:#0a1020;
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--text);
+  padding:8px;
+}
+
+/* Week */
+.bar{
+  display:flex;
+  gap:8px;
+  margin-bottom:10px;
+}
+.track{
+  flex:1;
+  height:14px;
+  background:rgba(148,163,184,.18);
+  border-radius:999px;
+}
+.fill{height:100%;border-radius:999px}
+.fill.good{background:var(--green)}
+.fill.mid{background:var(--amber)}
+.fill.bad{background:var(--red)}
+
+/* Toast */
+#toast{
+  position:fixed;
+  bottom:18px;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:10px 14px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+  display:none;
+}
