@@ -7,34 +7,47 @@ const today=()=>new Date().toISOString().slice(0,10);
 
 const state=JSON.parse(localStorage.getItem(KEY))||{
   tab:"today",
-  habits:["Grind","Deep Work","No Porn","Sleep ≥ 7h"],
+  habits:[
+    "Grind",
+    "Deep Work",
+    "Workout",
+    "Sleep ≥ 7h"
+  ],
   entries:{}
 };
 
 let day=today();
 
+/* Helpers */
 function save(){localStorage.setItem(KEY,JSON.stringify(state));}
+
 function entry(d){
   if(!state.entries[d]){
     state.entries[d]={done:{},submitted:false,notes:""};
   }
   return state.entries[d];
 }
+
 function toast(msg){
   const t=document.getElementById("toast");
-  t.textContent=msg;t.style.display="block";
+  t.textContent=msg;
+  t.style.display="block";
   setTimeout(()=>t.style.display="none",2000);
 }
+
 function score(d){
   return `${Object.values(entry(d).done).filter(Boolean).length}/${state.habits.length}`;
 }
+
 function last7(){
   return [...Array(7)].map((_,i)=>{
-    const d=new Date();d.setDate(d.getDate()-i);
+    const d=new Date();
+    d.setDate(d.getDate()-i);
     return d.toISOString().slice(0,10);
   }).reverse();
 }
 
+/* Render */
 function render(){
   const app=document.getElementById("app");
   app.innerHTML="";
@@ -60,6 +73,7 @@ function render(){
   });
   app.appendChild(tabs);
 
+  /* TODAY */
   if(state.tab==="today"){
     const e=entry(day);
     const d=new Date(day);
@@ -76,12 +90,17 @@ function render(){
       const row=document.createElement("div");
       row.className="habit";
       row.innerHTML=`
-        <div>${h}<div class="meta">${e.submitted?"LOCKED":"Editable"}</div></div>
+        <div>
+          ${h}
+          <div class="meta">${e.submitted?"LOCKED":"Editable"}</div>
+        </div>
         <div class="toggle ${e.done[h]?"on":""} ${e.submitted?"locked":""}"></div>
       `;
       row.querySelector(".toggle").onclick=()=>{
         if(e.submitted)return toast("Unsubmit to edit");
-        e.done[h]=!e.done[h];save();render();
+        e.done[h]=!e.done[h];
+        save();
+        render();
       };
       c.appendChild(row);
     });
@@ -92,11 +111,14 @@ function render(){
     submit.onclick=()=>{
       if(e.submitted){
         if(!confirm("Unsubmit this day?"))return;
-        e.submitted=false;toast("Day unsubmitted");
+        e.submitted=false;
+        toast("Day unsubmitted");
       }else{
-        e.submitted=true;toast("Day submitted");
+        e.submitted=true;
+        toast("Day submitted");
       }
-      save();render();
+      save();
+      render();
     };
     c.appendChild(submit);
 
@@ -109,6 +131,7 @@ function render(){
     app.appendChild(c);
   }
 
+  /* WEEK */
   if(state.tab==="week"){
     const c=document.createElement("div");
     c.className="card";
@@ -118,13 +141,16 @@ function render(){
       c.innerHTML+=`
         <div class="bar">
           <span>${new Date(d).toLocaleDateString(undefined,{weekday:"short"})}</span>
-          <div class="track"><div class="fill ${pct>=80?"good":pct>=50?"mid":"bad"}" style="width:${pct}%"></div></div>
+          <div class="track">
+            <div class="fill ${pct>=80?"good":pct>=50?"mid":"bad"}" style="width:${pct}%"></div>
+          </div>
         </div>
       `;
     });
     app.appendChild(c);
   }
 
+  /* HABITS */
   if(state.tab==="habits"){
     const c=document.createElement("div");
     c.className="card";
@@ -134,7 +160,9 @@ function render(){
       row.innerHTML=`${h}<button class="btn danger">DELETE</button>`;
       row.querySelector("button").onclick=()=>{
         if(confirm("Delete habit?")){
-          state.habits=state.habits.filter(x=>x!==h);save();render();
+          state.habits=state.habits.filter(x=>x!==h);
+          save();
+          render();
         }
       };
       c.appendChild(row);
@@ -144,12 +172,17 @@ function render(){
     add.textContent="ADD HABIT";
     add.onclick=()=>{
       const n=prompt("Habit name?");
-      if(n){state.habits.push(n);save();render();}
+      if(n){
+        state.habits.push(n);
+        save();
+        render();
+      }
     };
     c.appendChild(add);
     app.appendChild(c);
   }
 
+  /* SETTINGS */
   if(state.tab==="settings"){
     const c=document.createElement("div");
     c.className="card";
