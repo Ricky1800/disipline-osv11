@@ -1,4 +1,4 @@
-const CACHE="dos-flat-v1";
+const CACHE = "dos-flat-v2";
 
 self.addEventListener("install",e=>{
   e.waitUntil(
